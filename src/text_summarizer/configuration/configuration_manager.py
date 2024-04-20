@@ -37,8 +37,7 @@ class ConfigurationManager:
         """Method to manage model configuration"""
         try:
             config = self.config.model
-            model_config = ModelConfig(trained_tokenizer_path=config.trained_tokenizer_path,
-                                       model_checkpoint_name=config.model_checkpoint_name,
+            model_config = ModelConfig(model_checkpoint_name=config.model_checkpoint_name,
                                        model_checkpoint_path=config.model_checkpoint_path,
                                        trained_model_path=config.trained_model_path)
             return model_config

@@ -94,10 +94,10 @@ class ModelTrainer:
                               eval_dataset=data["validation"])
             model_trainer.train()
 
-            # Save tokenizer
-            trained_tokenizer.save_pretrained(self.model_config.trained_tokenizer_path)
-            # Save model
+            # Save model (it saves tokenizer as well)
             model_trainer.save_model(self.model_config.trained_model_path)
+            # Save tokenizer
+            # trained_tokenizer.save_pretrained(self.model_config.trained_tokenizer_path)
         except AttributeError as ex:
             logger.exception("Error finding attribute: %s", ex)
             raise ex

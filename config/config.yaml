@@ -8,7 +8,6 @@ data:
 
 
 model:
-  trained_tokenizer_path: artifacts/text_summarizer/trained_tokenizer
   model_checkpoint_name: google/pegasus-cnn_dailymail
   model_checkpoint_path: artifacts/models/checkpoints
   trained_model_path: artifacts/models/trained_model
