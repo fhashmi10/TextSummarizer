@@ -68,7 +68,7 @@ class ModelTrainer:
                                                            model=pretrained_model)
 
             # Load data
-            data = load_from_disk(self.data_config.data_full_path)
+            data = load_from_disk(self.data_config.transformed_data_path)
 
             trainer_args = TrainingArguments(
                 output_dir=self.model_config.model_checkpoint_path,
@@ -88,7 +88,9 @@ class ModelTrainer:
                               args=trainer_args,
                               tokenizer=trained_tokenizer,
                               data_collator=seq2seq_data_collator,
-                              train_dataset=data["train"],
+                              #train_dataset=data["train"],
+                              train_dataset=data["test"],
+                              # training with test as my local is taking too long with training data
                               eval_dataset=data["validation"])
             model_trainer.train()
 
