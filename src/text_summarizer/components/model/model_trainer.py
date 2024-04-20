@@ -12,10 +12,10 @@ class ModelTrainer:
     """Class to train models"""
 
     def __init__(self, data_config: DataConfig,
-                 model_config: ModelConfig, param_config: ParamConfig):
+                 model_config: ModelConfig, params: ParamConfig):
         self.data_config = data_config
         self.model_config = model_config
-        self.param_config = param_config
+        self.params = params
 
     @staticmethod
     def get_trained_tokenizer(tokenizer_name: str):
@@ -72,16 +72,16 @@ class ModelTrainer:
 
             trainer_args = TrainingArguments(
                 output_dir=self.model_config.model_checkpoint_path,
-                num_train_epochs=self.param_config.num_train_epochs,
-                warmup_steps=self.param_config.warmup_steps,
-                per_device_train_batch_size=self.param_config.per_device_train_batch_size,
-                per_device_eval_batch_size=self.param_config.per_device_train_batch_size,
-                weight_decay=self.param_config.weight_decay,
-                logging_steps=self.param_config.logging_steps,
-                evaluation_strategy=self.param_config.evaluation_strategy,
-                eval_steps=self.param_config.eval_steps,
-                save_steps=self.param_config.save_steps,
-                gradient_accumulation_steps=self.param_config.gradient_accumulation_steps
+                num_train_epochs=self.params.num_train_epochs,
+                warmup_steps=self.params.warmup_steps,
+                per_device_train_batch_size=self.params.per_device_train_batch_size,
+                per_device_eval_batch_size=self.params.per_device_train_batch_size,
+                weight_decay=self.params.weight_decay,
+                logging_steps=self.params.logging_steps,
+                evaluation_strategy=self.params.evaluation_strategy,
+                eval_steps=self.params.eval_steps,
+                save_steps=self.params.save_steps,
+                gradient_accumulation_steps=self.params.gradient_accumulation_steps
             )
 
             model_trainer=Trainer(model=pretrained_model,

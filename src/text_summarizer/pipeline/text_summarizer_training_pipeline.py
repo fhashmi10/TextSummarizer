@@ -6,7 +6,7 @@ from src.text_summarizer.configuration.configuration_manager import Configuratio
 from src.text_summarizer.components.data.data_ingestion import DataIngestion
 from src.text_summarizer.components.data.data_transformation import DataTransformation
 from src.text_summarizer.components.model.model_trainer import ModelTrainer
-from src.text_summarizer.components.model.model_evaluator import ModelEvaluator
+#from src.text_summarizer.components.model.model_evaluator import ModelEvaluator
 
 
 class TextSummarizerTrainingPipeline:

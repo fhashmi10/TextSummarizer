@@ -54,7 +54,7 @@ class ConfigurationManager:
         try:
             params = self.params
             param_config = ParamConfig(eval_steps=params.eval_steps,
-                                       evaluation_strategy=params.evaluation_str,
+                                       evaluation_strategy=params.evaluation_strategy,
                                        gradient_accumulation_steps=\
                                         params.gradient_accumulation_steps,
                                        logging_steps=params.logging_steps,
