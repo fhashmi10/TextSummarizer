@@ -1,5 +1,5 @@
 """Module to map data from config to dataclasses"""
-from src.text_summarizer.entities.config_entity import (DataConfig)
+from src.text_summarizer.entities.config_entity import DataConfig, ModelConfig, ParamConfig
 from src.utils.common import read_yaml_configbox
 from src import logger
 
@@ -26,6 +26,45 @@ class ConfigurationManager:
                                      tokenizer_name=config.tokenizer_name,
                                      transformed_data_path=config.transformed_data_path)
             return data_config
+        except AttributeError as ex:
+            logger.exception("Error finding attribute: %s", ex)
+            raise ex
+        except Exception as ex:
+            logger.exception("Exception occured: %s", ex)
+            raise ex
+
+    def get_model_config(self) -> ModelConfig:
+        """Method to manage model configuration"""
+        try:
+            config = self.config.model
+            model_config = ModelConfig(trained_tokenizer_path=config.trained_tokenizer_path,
+                                       model_checkpoint_name=config.model_checkpoint_name,
+                                       model_checkpoint_path=config.model_checkpoint_path,
+                                       trained_model_path=config.trained_model_path)
+            return model_config
+        except AttributeError as ex:
+            logger.exception("Error finding attribute: %s", ex)
+            raise ex
+        except Exception as ex:
+            logger.exception("Exception occured: %s", ex)
+            raise ex
+
+    def get_param_config(self) -> ParamConfig:
+        """Method to manage param configuration"""
+        try:
+            params = self.params
+            param_config = ParamConfig(eval_steps=params.eval_steps,
+                                       evaluation_strategy=params.evaluation_str,
+                                       gradient_accumulation_steps=\
+                                        params.gradient_accumulation_steps,
+                                       logging_steps=params.logging_steps,
+                                       num_train_epochs=params.num_train_epochs,
+                                       per_device_train_batch_size=\
+                                        params.per_device_train_batch_size,
+                                       save_steps=params.save_steps,
+                                       warmup_steps=params.warmup_steps,
+                                       weight_decay=params.weight_decay)
+            return param_config
         except AttributeError as ex:
             logger.exception("Error finding attribute: %s", ex)
             raise ex

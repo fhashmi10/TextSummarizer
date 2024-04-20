@@ -17,33 +17,24 @@ class DataConfig:
 @dataclass(frozen=True)
 class ModelConfig:
     """Class to map model config"""
-    model_url: str
-    base_model_path: Path
-    built_model_path: Path
-    transform_model_path: Path
+    trained_tokenizer_path: Path
+    model_checkpoint_name: str
+    model_checkpoint_path: Path
     trained_model_path: Path
 
 
 @dataclass(frozen=True)
 class ParamConfig:
     """Class to map param config"""
-    trainable: bool
-    augmentation: bool
-    image_size: str
-    batch_size: int
-    number_classes: int
-    number_epochs: int
-    learning_rate: float
-    dropout_rate: float
-    l2_pentaly_rate: float
-
-
-@dataclass(frozen=True)
-class CallbackConfig:
-    """Class to map callback config"""
-    callback_path: Path
-    #tensorboard_log_path: Path
-    model_checkpoint_path: Path
+    num_train_epochs: int
+    warmup_steps: int
+    per_device_train_batch_size: int
+    weight_decay: float
+    logging_steps: int
+    evaluation_strategy: str
+    eval_steps: int
+    save_steps: float
+    gradient_accumulation_steps: int
 
 
 @dataclass

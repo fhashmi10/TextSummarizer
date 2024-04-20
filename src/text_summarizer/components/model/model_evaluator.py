@@ -8,7 +8,7 @@ from text_summarizer.entities import ModelEvaluationConfig
 
 
 
-class ModelEvaluation:
+class ModelEvaluator:
     def __init__(self, config: ModelEvaluationConfig):
         self.config = config
 

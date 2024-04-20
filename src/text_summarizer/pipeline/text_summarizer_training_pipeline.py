@@ -5,6 +5,8 @@ from src.text_summarizer.configuration import CONFIG_FILE_PATH, PARAMS_FILE_PATH
 from src.text_summarizer.configuration.configuration_manager import ConfigurationManager
 from src.text_summarizer.components.data.data_ingestion import DataIngestion
 from src.text_summarizer.components.data.data_transformation import DataTransformation
+from src.text_summarizer.components.model.model_trainer import ModelTrainer
+from src.text_summarizer.components.model.model_evaluator import ModelEvaluator
 
 
 class TextSummarizerTrainingPipeline:
@@ -34,30 +36,14 @@ class TextSummarizerTrainingPipeline:
         except Exception as ex:
             raise ex
 
-    def model_builder(self, config: ConfigurationManager, stage_name: str):
-        """Method to perform model building"""
-        try:
-            logger.info("%s started", stage_name)
-            # model_builder = ModelBuilder(config=config.get_model_config(),
-            #                              params=config.get_param_config())
-            # model_builder.build_model()
-            logger.info("%s completed\nx==========x", stage_name)
-        except Exception as ex:
-            raise ex
-
     def model_trainer(self, config: ConfigurationManager, stage_name: str):
         """Method to perform model training"""
         try:
             logger.info("%s started", stage_name)
-            # model_callback = ModelCallbacks(
-            #     config=config.get_callback_config())
-            # callback_list = model_callback.get_callbacks()
-
-            # model_trainer = ModelTrainer(data_config=config.get_data_config(),
-            #                              model_config=config.get_model_config(),
-            #                              callback_config=config.get_callback_config(),
-            #                              params=config.get_param_config())
-            # model_trainer.train_model(callback_list=callback_list)
+            model_trainer = ModelTrainer(data_config=config.get_data_config(),
+                                         model_config=config.get_model_config(),
+                                         params=config.get_param_config())
+            model_trainer.train_model()
             logger.info("%s completed\nx==========x", stage_name)
         except Exception as ex:
             raise ex
@@ -88,12 +74,9 @@ class TextSummarizerTrainingPipeline:
                 if steps >= 2:
                     self.data_transformation(
                         config=config, stage_name=stage+": Data Transformation")
-                # if steps >= 2:
-                #     self.model_builder(
-                #         config=config, stage_name=stage+": Model Building")
-                # if steps >= 3:
-                #     self.model_trainer(
-                #         config=config, stage_name=stage+": Model Training")
+                if steps >= 3:
+                    self.model_trainer(
+                        config=config, stage_name=stage+": Model Training")
                 # if steps >= 4:
                 #     self.model_evaluator(
                 #         config=config, stage_name=stage+": Model Evaluation")

@@ -3,7 +3,7 @@ main module
 """
 import sys
 from src import logger
-from src.pipeline.main_training_pipeline import MainTrainingPipeline
+from src.main_pipeline.main_training_pipeline import MainTrainingPipeline
 
 try:
     obj = MainTrainingPipeline()

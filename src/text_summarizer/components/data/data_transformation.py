@@ -11,15 +11,15 @@ class DataTransformation:
 
     def __init__(self, config: DataConfig):
         self.config = config
-        self.tokenizer = AutoTokenizer.from_pretrained(config.tokenizer_name)
 
     def tokenize(self, example_batch):
         """Method to tokenize input batches"""
         try:
-            input_encodings = self.tokenizer(
+            tokenizer = AutoTokenizer.from_pretrained(self.config.tokenizer_name)
+            input_encodings = tokenizer(
             example_batch['dialogue'], max_length=1024, truncation=True)
-            with self.tokenizer.as_target_tokenizer():
-                target_encodings = self.tokenizer(
+            with tokenizer.as_target_tokenizer():
+                target_encodings = tokenizer(
                     example_batch['summary'], max_length=128, truncation=True)
             return {
                 'input_ids': input_encodings['input_ids'],
