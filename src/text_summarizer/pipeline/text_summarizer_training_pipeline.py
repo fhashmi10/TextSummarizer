@@ -6,7 +6,7 @@ from src.text_summarizer.configuration.configuration_manager import Configuratio
 from src.text_summarizer.components.data.data_ingestion import DataIngestion
 from src.text_summarizer.components.data.data_transformation import DataTransformation
 from src.text_summarizer.components.model.model_trainer import ModelTrainer
-#from src.text_summarizer.components.model.model_evaluator import ModelEvaluator
+from src.text_summarizer.components.model.model_evaluator import ModelEvaluator
 
 
 class TextSummarizerTrainingPipeline:
@@ -52,11 +52,11 @@ class TextSummarizerTrainingPipeline:
         """Method to perform model evaluation"""
         try:
             logger.info("%s started", stage_name)
-            # model_evaluator = ModelEvaluator(data_config=config.get_data_config(),
-            #                                  model_config=config.get_model_config(),
-            #                                  params=config.get_param_config(),
-            #                                  eval_config=config.get_evaluation_config())
-            # model_evaluator.evaluate_model()
+            model_evaluator = ModelEvaluator(data_config=config.get_data_config(),
+                                             model_config=config.get_model_config(),
+                                             params=config.get_param_config(),
+                                             eval_config=config.get_evaluation_config())
+            model_evaluator.evaluate_model()
             logger.info("%s completed\nx==========x", stage_name)
         except Exception as ex:
             raise ex
@@ -77,9 +77,9 @@ class TextSummarizerTrainingPipeline:
                 if steps >= 3:
                     self.model_trainer(
                         config=config, stage_name=stage+": Model Training")
-                # if steps >= 4:
-                #     self.model_evaluator(
-                #         config=config, stage_name=stage+": Model Evaluation")
+                if steps >= 4:
+                    self.model_evaluator(
+                        config=config, stage_name=stage+": Model Evaluation")
             else:
                 logger.info(
                     "Please provide number of steps to run min 1 to max 4.")

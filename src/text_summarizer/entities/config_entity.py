@@ -39,7 +39,6 @@ class ParamConfig:
 @dataclass
 class EvaluationConfig:
     """Class to map evaluation config"""
-    test_data_path: Path
-    evaluation_score_json_path: Path
-    mlflow_uri: str
-    track_params: dict
+    eval_metrics: str
+    eval_metrics_type: list
+    eval_scores_path: Path
