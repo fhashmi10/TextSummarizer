@@ -3,7 +3,8 @@ from datasets import load_from_disk, load_metric
 import torch
 import pandas as pd
 from tqdm import tqdm
-from text_summarizer.entities.config_entity import DataConfig, ModelConfig, ParamConfig, EvaluationConfig
+from src.text_summarizer.entities.config_entity import \
+    DataConfig, ModelConfig, ParamConfig, EvaluationConfig
 from src import logger
 
 

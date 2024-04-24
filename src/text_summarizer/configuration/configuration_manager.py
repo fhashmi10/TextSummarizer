@@ -74,9 +74,9 @@ class ConfigurationManager:
         """Method to map evaluation configurations"""
         try:
             config = self.config.evaluation
-            eval_config = EvaluationConfig(eval_metrics=config.evaluation_metrics,
-                                           eval_metrics_type=config.evaluation_metrics_type,
-                                           eval_scores_path=config.evaluation_scores_path)
+            eval_config = EvaluationConfig(eval_metrics=config.eval_metrics,
+                                           eval_metrics_type=config.eval_metrics_type,
+                                           eval_scores_path=config.eval_scores_path)
             return eval_config
         except AttributeError as ex:
             logger.exception("Error finding attribute: %s", ex)

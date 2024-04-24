@@ -59,7 +59,7 @@ class ModelTrainer:
     def train_model(self):
         """Method to invoke model training"""
         try:
-            if not os.path.exists(self.config.trained_model_path):
+            if not os.path.exists(self.model_config.trained_model_path):
                 trained_tokenizer = self.get_trained_tokenizer(
                     self.data_config.tokenizer_name)
                 pretrained_model = self.get_model(
@@ -101,8 +101,8 @@ class ModelTrainer:
                 # Save tokenizer
                 # trained_tokenizer.save_pretrained(self.model_config.trained_tokenizer_path)
             else:
-                logger.info("Trained Modl already exists at: %s",
-                                self.config.trained_model_path)
+                logger.info("Trained Model already exists at: %s",
+                                self.model_config.trained_model_path)
         except AttributeError as ex:
             logger.exception("Error finding attribute: %s", ex)
             raise ex
