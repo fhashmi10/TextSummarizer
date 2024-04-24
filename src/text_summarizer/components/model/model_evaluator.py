@@ -6,6 +6,7 @@ from tqdm import tqdm
 from src.text_summarizer.entities.config_entity import \
     DataConfig, ModelConfig, ParamConfig, EvaluationConfig
 from src import logger
+from src.utils.common import create_directories
 
 
 class ModelEvaluator:
@@ -55,7 +56,7 @@ class ModelEvaluator:
             # Just first 10 rows for quick testing of evaluation
 
             # Eval Metrics
-            rouge_metric = load_metric(self.eval_config.eval_metrics)
+            eval_metric = load_metric(self.eval_config.eval_metrics)
 
             # Evaluate
             article_batches = list(self.generate_batch_sized_chunks(
@@ -81,16 +82,19 @@ class ModelEvaluator:
                 decoded_summaries = [d.replace("", " ")
                                      for d in decoded_summaries]
 
-                rouge_metric.add_batch(predictions=decoded_summaries,
+                eval_metric.add_batch(predictions=decoded_summaries,
                                  references=target_batch)
 
             #  Finally compute and return the ROUGE scores.
-            score = rouge_metric.compute()
-
+            score = eval_metric.compute()
+            metric_types = [met.strip()
+                           for met in self.eval_config.eval_metrics_type.split(',')]
             rouge_dict = dict((rn, score[rn].mid.fmeasure)
-                              for rn in self.eval_config.eval_metrics_type)
+                              for rn in metric_types)
 
             df = pd.DataFrame(rouge_dict, index=['pegasus'])
+
+            create_directories([self.eval_config.eval_scores_path], is_file_path=True)
             df.to_csv(self.eval_config.eval_scores_path, index=False)
         except AttributeError as ex:
             logger.exception("Error finding attribute: %s", ex)
